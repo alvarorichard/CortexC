@@ -56,7 +56,7 @@ int i, ret;
 
 }
 
-void eval() {
+int eval() {
     int op, *tmp;
     while (1) {
         op = *pc++; // get next operation code
