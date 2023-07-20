@@ -40,8 +40,19 @@ void program(){
   }
 }
 
-int eval(){
-  return 0;
+void eval() {
+    int op, *tmp;
+    while (1) {
+        op = *pc++; // get next operation code
+        if (op == IMM)       {ax = *pc++;}                                     // load immediate value to ax
+        else if (op == LC)   {ax = *(char *)ax;}                               // load character to ax, address in ax
+        else if (op == LI)   {ax = *(int *)ax;}                                // load integer to ax, address in ax
+        else if (op == SC)   {ax = *(char *)*sp++ = ax;}                       // save character to address, value in ax, address on stack
+        else if (op == SI)   {*(int *)*sp++ = ax;}                             // save integer to address, value in ax, address on stack
+    }
+
+    
+    return 0;
 }
 
 int main(int argc, char **argv)
