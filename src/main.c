@@ -3,16 +3,18 @@
 #include <memory.h>
 #include <string.h>
 #include <stdint.h>
-#define int long long
+#include <unistd.h>
+
 
 int token;
 char *src, *old_src;
 int poolsize;
 int line;
-int *text,            // text segment
-    *old_text,        // for dump text segment
-    *stack;           // stack
-char *data;           // data segment
+
+int *text,
+    *old_text,
+    *stack;
+char *data;
 
 void next(){
   token = *src++;
@@ -61,6 +63,10 @@ argc--;
         printf("leu() returnou %d\n", i);
         return -1;
     }
+
+  memset(text,0,poolsize);
+  memset(data,0,poolsize);
+  memset(stack,0,poolsize);
 
   src[i] = 0;
   close(fd);
