@@ -7,7 +7,6 @@
 #include <fcntl.h>
 
 
-
 int *pc, *bp, *sp, ax, cycle;
 
 enum { LEA ,IMM ,JMP ,CALL,JZ  ,JNZ ,ENT ,ADJ ,LEV ,LI  ,LC  ,SI  ,SC  ,PUSH,
@@ -77,42 +76,48 @@ void eval() {
     return 0;
 }
 
+
 int main(int argc, char **argv)
 {
+    int i, fd;
 
-int i, fd;
+    argc--;
+    argv++;
 
-argc--;
-  argv++;
-
-  poolsize = 256 * 1024;
+    poolsize = 256 * 1024;
     line = 1;
 
-  if ((fd = open(*argv, 0)) < 0) {
-    printf("nao pode abrir(%s)\n",*argv);
-    return -1;
-  }
+    if ((fd = open(*argv, 0)) < 0) {
+        perror("Error opening file");
+        return -1;
+    }
 
-   if (!(src = old_src = malloc(poolsize))) {
+    if (!(src = old_src = malloc(poolsize))) {
         printf("could not malloc(%d) for source area\n", poolsize);
         return -1;
     }
 
-    if ((i = read(fd, src, poolsize-1)) <= 0) {
-        printf("leu() returnou %d\n", i);
+    if (!(text = malloc(poolsize)) || !(data = malloc(poolsize)) || !(stack = malloc(poolsize))) {
+        printf("could not malloc(%d) for text/data/stack area\n", poolsize);
         return -1;
     }
 
-  memset(text,0,poolsize);
-  memset(data,0,poolsize);
-  memset(stack,0,poolsize);
+    if ((i = read(fd, src, poolsize-1)) <= 0) {
+        printf("read() returned %d\n", i);
+        return -1;
+    }
 
-  bp = sp = (int *)((int)stack + poolsize);
-  ax = 0;
+    memset(text, 0, poolsize);
+    memset(data, 0, poolsize);
+    memset(stack, 0, poolsize);
 
-  src[i] = 0;
-  close(fd);
-  program();
-  return eval();
-  }
+    bp = sp = (int *)((int)stack + poolsize);
+    ax = 0;
+
+    src[i] = 0;
+    close(fd);
+
+    program();
+    return eval();
+}
 
