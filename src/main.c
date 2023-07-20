@@ -9,6 +9,10 @@ int token;
 char *src, *old_src;
 int poolsize;
 int line;
+int *text,            // text segment
+    *old_text,        // for dump text segment
+    *stack;           // stack
+char *data;           // data segment
 
 void next(){
   token = *src++;
