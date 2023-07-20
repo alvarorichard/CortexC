@@ -6,6 +6,11 @@
 #include <unistd.h>
 
 
+int *pc, *bp, *sp, ax, cycle;
+
+enum {  };
+
+
 int token;
 char *src, *old_src;
 int poolsize;
@@ -67,6 +72,9 @@ argc--;
   memset(text,0,poolsize);
   memset(data,0,poolsize);
   memset(stack,0,poolsize);
+
+  bp = sp = (int *)((int)stack + poolsize);
+  ax = 0;
 
   src[i] = 0;
   close(fd);
