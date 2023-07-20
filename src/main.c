@@ -70,6 +70,8 @@ int eval() {
         else if (op == JZ )  {pc = ax ? pc + 1 : (int *)*pc;}
         else if (op == JNZ)  {pc = ax ? (int *)*pc : pc + 1;}
         else if (op == CALL) {*--sp = (int)(pc+1); pc = (int *)*pc;}
+        else if (op == ADJ)  {sp = sp + *pc++;}
+        else if (op == LEV)  {sp = bp; bp (int *)*sp++; pc = (int*)*sp++;}
 
     }
 
