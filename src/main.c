@@ -40,6 +40,20 @@ void program(){
   }
 }
 
+int callee (int,int,int);
+
+int caller(void){
+
+int i, ret;
+
+  ret = calle (1,2,3);
+  ret += 5;
+
+  return ret;
+
+
+}
+
 void eval() {
     int op, *tmp;
     while (1) {
