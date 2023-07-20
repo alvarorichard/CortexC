@@ -8,7 +8,7 @@
 
 int *pc, *bp, *sp, ax, cycle;
 
-enum {  };
+enum {LEA,IMM,JMP,CALL,JZ  };
 
 
 int token;
