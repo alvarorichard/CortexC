@@ -41,20 +41,19 @@ void program(){
     next();
   }
 }
+#undef int
 
-int callee (int,int,int);
+int callee(int, int, int);
 
-int caller(void){
+int caller(void)
+{
+        int i, ret;
 
-int i, ret;
-
-  ret = calle (1,2,3);
-  ret += 5;
-
-  return ret;
-
-
+        ret = callee(1, 2, 3);
+        ret += 5;
+        return ret;
 }
+
 
 int eval() {
     int op, *tmp;
@@ -71,7 +70,7 @@ int eval() {
         else if (op == JNZ)  {pc = ax ? (int *)*pc : pc + 1;}
         else if (op == CALL) {*--sp = (int)(pc+1); pc = (int *)*pc;}
         else if (op == ADJ)  {sp = sp + *pc++;}
-        else if (op == LEV)  {sp = bp; bp (int *)*sp++; pc = (int*)*sp++;}
+        else if (op == LEV)  {sp = bp; bp = (int *)*sp++; pc = (int *)*sp++;}  // restore call frame and PC
         else if (op == LEA)  {ax =(int)(bp + *pc++);}
         else if (op == OR)  ax = *sp++ | ax;
         else if (op == XOR) ax = *sp++ ^ ax;
@@ -101,7 +100,7 @@ int eval() {
        else if (op == MSET) { ax = (int)memset((char *)sp[2], sp[1], *sp);}
        else if (op == MCMP) { ax = memcmp((char *)sp[2], (char *)sp[1], *sp);}
     else {
-      printf("Instrucao Desconhecida:%d\n",op)
+      printf("Instrucao Desconhecida:%d\n",op);
         return -1;
        
         }
@@ -111,7 +110,9 @@ int eval() {
     return 0;
 }
 
-int main(int argc, char **argv)
+#undef int
+
+int main(int argc, char *argv[])
 {
 
 int i, fd;
@@ -143,7 +144,17 @@ argc--;
 
   bp = sp = (int *)((int)stack + poolsize);
   ax = 0;
+  i = 0;
 
+    text[i++] = IMM;
+    text[i++] = 10;
+    text[i++] = PUSH;
+    text[i++] = IMM;
+    text[i++] = 20;
+    text[i++] = ADD;
+    text[i++] = PUSH;
+    text[i++] = EXIT;
+    pc = text;
   src[i] = 0;
   close(fd);
   program();
