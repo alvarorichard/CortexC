@@ -43,7 +43,9 @@ void program(){
 }
 #undef int
 
-int callee(int, int, int);
+int callee(int a, int b, int c){
+  return a + b + c;
+}
 
 int caller(void)
 {
