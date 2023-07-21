@@ -100,6 +100,11 @@ int eval() {
        else if (op == MALC) { ax = (int)malloc(*sp);}
        else if (op == MSET) { ax = (int)memset((char *)sp[2], sp[1], *sp);}
        else if (op == MCMP) { ax = memcmp((char *)sp[2], (char *)sp[1], *sp);}
+    else {
+      printf("Instrucao Desconhecida:%d\n",op)
+        return -1;
+       
+        }
     }
 
     
