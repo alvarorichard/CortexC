@@ -72,7 +72,23 @@ int eval() {
         else if (op == CALL) {*--sp = (int)(pc+1); pc = (int *)*pc;}
         else if (op == ADJ)  {sp = sp + *pc++;}
         else if (op == LEV)  {sp = bp; bp (int *)*sp++; pc = (int*)*sp++;}
-
+        else if (op == LEA)  {ax =(int)(bp + *pc++);}
+        else if (op == OR)  ax = *sp++ | ax;
+        else if (op == XOR) ax = *sp++ ^ ax;
+        else if (op == AND) ax = *sp++ & ax;
+        else if (op == EQ)  ax = *sp++ == ax;
+        else if (op == NE)  ax = *sp++ != ax;
+        else if (op == LT)  ax = *sp++ < ax;
+        else if (op == LE)  ax = *sp++ <= ax;
+        else if (op == GT)  ax = *sp++ >  ax;
+        else if (op == GE)  ax = *sp++ >= ax;
+        else if (op == SHL) ax = *sp++ << ax;
+        else if (op == SHR) ax = *sp++ >> ax;
+        else if (op == ADD) ax = *sp++ + ax;
+        else if (op == SUB) ax = *sp++ - ax;
+        else if (op == MUL) ax = *sp++ * ax;
+        else if (op == DIV) ax = *sp++ / ax;
+        else if (op == MOD) ax = *sp++ % ax;
     }
 
     
