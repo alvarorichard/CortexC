@@ -30,9 +30,14 @@ int *text,
     *stack;
 char *data;
 
-void next(){
-  token = *src++;
-  return;
+void next() {
+    char *last_pos;
+    int hash;
+    while (token = *src) {
+        ++src;
+        // parse token here
+    }
+    return;
 }
 
 void expression(int level){
