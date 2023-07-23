@@ -35,6 +35,10 @@ void next() {
     int hash;
     while (token = *src) {
         ++src;
+
+    if (token == '\n') {
+    ++line;
+}
         // parse token here
     }
     return;
