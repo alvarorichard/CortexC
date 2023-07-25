@@ -39,7 +39,14 @@ void next() {
     if (token == '\n') {
     ++line;
 }
-        // parse token here
+
+else if (token == '#') {
+    while (*src != 0 && *src != '\n') {
+        src++;
+    }
+}
+
+
     }
     return;
 }
