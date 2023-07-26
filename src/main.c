@@ -82,7 +82,7 @@ int caller(void)
 int eval() {
     int op, *tmp;
     while (1) {
-        op = *pc++; // get next operation code
+        op = *pc++; // gera o proximo codigo
         if (op == IMM)       {ax = *pc++;}                                     // load immediate value to ax
         else if (op == LC)   {ax = *(char *)ax;}                               // load character to ax, address in ax
         else if (op == LI)   {ax = *(int *)ax;}                                // load integer to ax, address in ax
