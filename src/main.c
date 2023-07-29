@@ -76,8 +76,16 @@ else if (token == '#') {
       }
       current_id = symbols;
       while (current_id[Token]) {
-        if
+        if(current_id[Hash] == hash && !memcmp(s1:)char *)current_id[Name], s2: last_pos, n:src - last_pos)){
+          token = current_id[Token];
+          return;
+        }
+        current_id = current_id + IdSize;
       }
+      current_id[Name] = (int)last_pos;
+      current_id[Hash] = hash;
+      token = current_id [Token] = Id;
+      return;
     }
 
 
