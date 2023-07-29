@@ -34,6 +34,9 @@ enum {
   Assign, Cond, Lor, Lan, Or, Xor, And, Eq, Ne, Lt, Gt, Le, Ge, Shl, Shr, Add, Sub, Mul, Div, Mod, Inc, Dec, Brak
 };
 
+token_val = token_val *16 +(token & 0x0f) + (token >= 'A'? 9 :0);
+
+
 int token;
 char *src, *old_src;
 int poolsize;
@@ -83,6 +86,35 @@ void next() {
             token = current_id[Token] = Id;
             return;
         }
+   
+else if (token >= '0' && token <= '9') {
+            // parse number, three kinds: dec(123) hex(0x123) oct(017)
+            token_val = token - '0';
+            if (token_val > 0) {
+                // dec, starts with [1-9]
+                while (*src >= '0' && *src <= '9') {
+                    token_val = token_val*10 + *src++ - '0';
+                }
+            } else {
+                // starts with number 0
+                if (*src == 'x' || *src == 'X') {
+                    //hex
+                    token = *++src;
+                    while ((token >= '0' && token <= '9') || (token >= 'a' && token <= 'f') || (token >= 'A' && token <= 'F')) {
+                        token_val = token_val * 16 + (token & 15) + (token >= 'A' ? 9 : 0);
+                        token = *++src;
+                    }
+                } else {
+                    // oct
+                    while (*src >= '0' && *src <= '7') {
+                        token_val = token_val*8 + *src++ - '0';
+                    }
+                }
+            }
+            token = Num;
+            return;
+        }
+
     }
 }
 //teste commit new machine 
