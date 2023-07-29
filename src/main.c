@@ -10,6 +10,8 @@
 
 int *pc, *bp, *sp, ax, cycle;
 
+
+
 struct identifier {
   int token;
   int hash;
@@ -42,6 +44,12 @@ int *text,
     *stack;
 char *data;
 
+
+int token_val;
+int *current_id,
+    *symbols;
+
+enum {token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize  };
 void next() {
     char *last_pos;
     int hash;
