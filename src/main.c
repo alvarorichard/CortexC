@@ -34,8 +34,6 @@ enum {
   Assign, Cond, Lor, Lan, Or, Xor, And, Eq, Ne, Lt, Gt, Le, Ge, Shl, Shr, Add, Sub, Mul, Div, Mod, Inc, Dec, Brak
 };
 
-token_val = token_val *16 +(token & 0x0f) + (token >= 'A'? 9 :0);
-
 
 int token;
 char *src, *old_src;
@@ -52,6 +50,7 @@ int *current_id,
     *symbols;
 
 enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
+token_val = token_val * 16 + (token & 0x0F) + (token >= 'A' ? 9 : 0);
 
 void next() {
     char token;
