@@ -44,54 +44,48 @@ int *text,
     *stack;
 char *data;
 
-
 int token_val;
 int *current_id,
     *symbols;
 
-enum {token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize  };
-
+enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
 
 void next() {
+    char token;
     char *last_pos;
     int hash;
-    while (token = *src) {
+    while ((token = *src)) {
         ++src;
 
-    if (token == '\n') {
-    ++line;
-}
-
-else if (token == '#') {
-    while (*src != 0 && *src != '\n') {
-        src++;
-    }
-}
-    else if (token >= 'a' && token <= 'z') || (token >= 'A' && token <= 'Z') || (token == "_")){
-      last_pos = src - 1;
-      hash = token;
-      while (*src >= 'a' && *src <= 'z') || (*src >= 'A' && *src <= 'Z') || (*src >= '0' && *src <= '9') || (*src == '_')){
-        hash = hash * 147 + *src;
-        src++;
-      }
-      current_id = symbols;
-      while (current_id[Token]) {
-        if(current_id[Hash] == hash && !memcmp(s1:)char *)current_id[Name], s2: last_pos, n:src - last_pos)){
-          token = current_id[Token];
-          return;
+        if (token == '\n') {
+            ++line;
+        } else if (token == '#') {
+            while (*src != 0 && *src != '\n') {
+                src++;
+            }
+        } else if ((token >= 'a' && token <= 'z') || (token >= 'A' && token <= 'Z') || (token == '_')) {
+            last_pos = src - 1;
+            hash = token;
+            while ((*src >= 'a' && *src <= 'z') || (*src >= 'A' && *src <= 'Z') || (*src >= '0' && *src <= '9') || (*src == '_')) {
+                hash = hash * 147 + *src;
+                src++;
+            }
+            current_id = symbols;
+            while (current_id[Token]) {
+                if (current_id[Hash] == hash && !memcmp((char *)current_id[Name], last_pos, src - last_pos)) {
+                    token = current_id[Token];
+                    return;
+                }
+                current_id = current_id + IdSize;
+            }
+            current_id[Name] = (int)last_pos;
+            current_id[Hash] = hash;
+            token = current_id[Token] = Id;
+            return;
         }
-        current_id = current_id + IdSize;
-      }
-      current_id[Name] = (int)last_pos;
-      current_id[Hash] = hash;
-      token = current_id [Token] = Id;
-      return;
     }
-
-
-    }
-    return;
 }
+
 
 void expression(int level){
 
