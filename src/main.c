@@ -182,7 +182,7 @@ argc--;
   bp = sp = (int *)((int)stack + poolsize);
   ax = 0;
   i = 0;
-
+ // comentario para teste compilador 
     text[i++] = IMM;
     text[i++] = 10;
     text[i++] = PUSH;
