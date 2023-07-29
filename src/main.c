@@ -50,6 +50,8 @@ int *current_id,
     *symbols;
 
 enum {token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize  };
+
+
 void next() {
     char *last_pos;
     int hash;
@@ -65,6 +67,18 @@ else if (token == '#') {
         src++;
     }
 }
+    else if (token >= 'a' && token <= 'z') || (token >= 'A' && token <= 'Z') || (token == "_")){
+      last_pos = src - 1;
+      hash = token;
+      while (*src >= 'a' && *src <= 'z') || (*src >= 'A' && *src <= 'Z') || (*src >= '0' && *src <= '9') || (*src == '_')){
+        hash = hash * 147 + *src;
+        src++;
+      }
+      current_id = symbols;
+      while (current_id[Token]) {
+        if
+      }
+    }
 
 
     }
