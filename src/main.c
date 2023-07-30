@@ -94,7 +94,7 @@ else if (token >= '0' && token <= '9') {
                     token_val = token_val*10 + *src++ - '0';
                 }
             } else {
-                // starts with number 0
+                // inicia com numero 0
                 if (*src == 'x' || *src == 'X') {
                     //hex
                     token = *++src;
@@ -133,6 +133,20 @@ else if (token >= '0' && token <= '9') {
                 token = Num;
             }
             return;
+        
+        }
+        else if (token == '/') {
+            if ( *src == '/') {
+                while (*src != 0 && *src != '\n') {
+                    ++src;
+                }
+            } else {
+                token = Div;
+                return;
+            }
+            {
+            }
+            
         
         }
 
