@@ -112,6 +112,29 @@ else if (token >= '0' && token <= '9') {
             token = Num;
             return;
         }
+        else if (token == '"' || token == '\'') {
+            last_pos = data;
+            while (*src != 0 && *src != token){
+                token_val = *src++;
+                if (token_val == '\\') {
+                    token_val = *src++;
+                    if (token_val == 'n') {
+                        token_val = '\n';
+                    }
+                }
+                if (token == '"') {
+                    *data++ = token_val;
+                }
+            }
+            src++;
+            if (token == '"') {
+                token_val = (int)last_pos;
+            } else {
+                token = Num;
+            }
+            return;
+        
+        }
 
     }
 }
