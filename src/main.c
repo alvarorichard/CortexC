@@ -86,10 +86,10 @@ void next() {
         }
    
 else if (token >= '0' && token <= '9') {
-            // parse number, three kinds: dec(123) hex(0x123) oct(017)
+            // Analisar número, três tipos: dec(123) hex(0x123) oct(017)
             token_val = token - '0';
             if (token_val > 0) {
-                // dec, starts with [1-9]
+                // dec, começa com [1-9]
                 while (*src >= '0' && *src <= '9') {
                     token_val = token_val*10 + *src++ - '0';
                 }
@@ -257,7 +257,7 @@ argc--;
   }
 
    if (!(src = old_src = malloc(poolsize))) {
-        printf("could not malloc(%d) for source area\n", poolsize);
+        printf("Não foi possível alocar (%d) para a área de origem\n", poolsize);
         return -1;
     }
 
