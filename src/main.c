@@ -203,6 +203,56 @@ else if (token >= '0' && token <= '9') {
             return;
             
         }
+        else if(token == '>'){
+            if (*src == '=')
+            {
+                src++;
+                token = Ge;
+            }else if (*src == '>') {
+                src ++;
+                token = Shr;
+             
+            } else {
+                token = Gt;
+            }
+            return;
+            
+        }
+        else if (token == '&') {
+            // parse '&' and '&&'
+            if (*src == '&') {
+                src ++;
+                token = Lan;
+            } else {
+                token = And;
+            }
+            return;
+        }
+        else if (token == '^') {
+            token = Xor;
+            return;
+        }
+        else if (token == '%') {
+            token = Mod;
+            return;
+        }
+        else if (token == '*') {
+            token = Mul;
+            return;
+        }
+        else if (token == '[') {
+            token = Brak;
+            return;
+        }
+        else if (token == '?') {
+            token = Cond;
+            return;
+        }
+        else if (token == '~' || token == ';' || token == '{' || token == '}' || token == '(' || token == ')' || token == ']' || token == ',' || token == ':') {
+            // directly return the character as token;
+            return;
+        }
+
 
 
 
