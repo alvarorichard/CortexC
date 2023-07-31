@@ -6,6 +6,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#define int long long
+
+
 
 
 int *pc, *bp, *sp, ax, cycle;
@@ -144,11 +147,66 @@ else if (token >= '0' && token <= '9') {
                 token = Div;
                 return;
             }
-            {
-            }
-            
+           
         
         }
+        else if (token == '=') {
+            if(*src == '=') {
+                src++;
+                token = Eq;
+            } else {
+                token = Assign;
+            }
+            return;
+
+        
+        }
+        else if(token == '+'){
+            if(*src == '+') {
+                src++;
+                token = Inc;
+            } else {
+                token = Add;
+            }
+            return;
+        }
+        else if (token == '-'){
+            if(*src == '-') {
+                src++;
+                token = Dec;
+            } else {
+                token = Sub;
+            }
+            return;
+        }
+        else if(token == '!'){
+            if(*src == '='){
+                src++;
+                token = Ne;
+
+
+            }
+            return;
+        }
+        else if(token == '<'){
+            if (*src == '=')
+            {
+                src++;
+                token = Le;
+            }else if (*src == '<') {
+                src ++;
+                token = Shl;
+             
+            } else {
+                token = Lt;
+            }
+            return;
+            
+        }
+
+
+
+            
 
     }
 }
