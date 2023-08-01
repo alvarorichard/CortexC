@@ -285,6 +285,24 @@ int factor(){
    return value;
 } 
 
+int term_tail(int lvalue){
+    if (token == '*')
+    {
+        match('*');
+        int value = lvalue * factor();
+        return term_tail(value);
+    }else if (token =='/'){
+        match('/');
+        int value = lvalue / factor();
+        return term_tail(value);
+    }else{
+        return lvalue;
+    }
+    
+}
+
+
+
 
 
 //teste commit new machine 
