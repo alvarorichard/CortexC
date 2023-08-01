@@ -57,6 +57,8 @@ int *current_id,
 
 enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
 
+
+
 void next() {
     char token;
     char *last_pos;
@@ -266,6 +268,24 @@ else if (token >= '0' && token <= '9') {
     }
 }
 
+int expr();
+
+int factor(){
+    int value = 0;
+    if (token == '(')
+    {
+        match ('(');
+        value = expr();
+        match(')');
+    }else if (token == Num)
+    {
+        value = token_val;
+        match(Num); 
+   } 
+   return value;
+} 
+
+
 
 //teste commit new machine 
 
@@ -423,7 +443,7 @@ argc--;
     text[i++] = PUSH;
     text[i++] = EXIT;
     pc = text;
-  src[i] = 0;
+    src[i] = 0;
 
 
   close(fd);
