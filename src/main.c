@@ -5,6 +5,9 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 
 #define int long long
 
@@ -256,6 +259,8 @@ else if (token >= '0' && token <= '9') {
 
 
 
+
+
             
 
     }
@@ -349,11 +354,36 @@ int eval() {
 }
 
 #undef int
+enum { CHAR, INT, PTR };
+int *idmain;
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
+   
+
 
 int i, fd;
+
+src = "char else enum if int return sizeof while "
+"open read close printf malloc memset memcmp exit void main";
+  i = Char;
+    while (i <= While) {
+        next();
+        current_id[Token] = i++;
+    }
+
+    i = OPEN;
+    while (i <= EXIT) {
+        next();
+        current_id[Class] = Sys;
+        current_id[Type] = INT;
+        current_id[Value] = i++;
+    }
+
+    next(); current_id[Token] = Char; 
+    next(); idmain = current_id;
+    
+
 
 argc--;
   argv++;
@@ -394,6 +424,8 @@ argc--;
     text[i++] = EXIT;
     pc = text;
   src[i] = 0;
+
+
   close(fd);
   program();
   return eval();
