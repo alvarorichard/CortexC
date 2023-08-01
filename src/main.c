@@ -41,6 +41,13 @@ enum {
 };
 
 
+
+int token;
+int token_val;
+
+char *src = NULL;
+
+
 int token;
 char *src, *old_src;
 int poolsize;
@@ -56,6 +63,7 @@ int *current_id,
     *symbols;
 
 enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
+
 
 
 
@@ -257,16 +265,55 @@ else if (token >= '0' && token <= '9') {
             // directly return the character as token;
             return;
         }
-
-
-
-
-
-
             
 
     }
+     while (*src == ' ' || *src == '\t') {
+        src ++;
+    }
+
+    token = *src++;
+
+    if (token >= '0' && token <= '9' ) {
+        token_val = token - '0';
+        token = Num;
+
+        while (*src >= '0' && *src <= '9') {
+            token_val = token_val*10 + *src - '0';
+            src ++;
+        }
+        return;
+    }
+     while (*src == ' ' || *src == '\t') {
+        src ++;
+    }
+
+    token = *src++;
+
+    if (token >= '0' && token <= '9' ) {
+        token_val = token - '0';
+        token = Num;
+
+        while (*src >= '0' && *src <= '9') {
+            token_val = token_val*10 + *src - '0';
+            src ++;
+        }
+        return;
+    }
 }
+
+void match(int tk) {
+    if (token != tk) {
+        printf("expected token: %d(%c), got: %d(%c)\n", tk, tk, token, token);
+        exit(-1);
+    }
+
+    next();
+}
+
+
+
+
 
 int expr();
 
@@ -299,6 +346,16 @@ int term_tail(int lvalue){
         return lvalue;
     }
     
+}
+
+int term (){
+  int lvalue = factor();
+  return term_tail (lvalue);
+}
+
+int expr() {
+    int lvalue = term();
+    return expr_tail(lvalue);
 }
 
 
@@ -391,13 +448,15 @@ int eval() {
     return 0;
 }
 
+
 #undef int
 enum { CHAR, INT, PTR };
 int *idmain;
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
    
+
 
 
 int i, fd;
@@ -451,6 +510,16 @@ argc--;
   bp = sp = (int *)((int)stack + poolsize);
   ax = 0;
   i = 0;
+char *line = NULL;
+size_t linecap = 0;
+    ssize_t linelen;
+    while ((linelen = getline(&line, &linecap, stdin)) > 0) {
+        src = line;
+        next();
+        printf("%lld", expr());
+    }
+    return 0;
+
  // comentario para teste compilador 
     text[i++] = IMM;
     text[i++] = 10;
