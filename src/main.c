@@ -65,6 +65,18 @@ int *current_id,
 enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
 
 
+int basetype;
+int expr_type;
+
+void global_declaration(){
+    int type;
+    int i;
+
+   
+
+
+}
+
 
 
 void next() {
@@ -385,6 +397,11 @@ void program(){
     printf("token é: %c\n", token);
     next();
   }
+  next();
+    while (token > 0) {
+        global_declaration();
+    }
+  
 }
 #undef int
 
