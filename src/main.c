@@ -8,16 +8,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-
 #define int long long
 
 
-
-
-
-
 int *pc, *bp, *sp, ax, cycle;
-
 
 
 struct identifier {
@@ -334,6 +328,8 @@ void function_declaration() {
         current_id = current_id + IdSize;
     }
 }
+
+
 enum { CHAR,  PTR };
 
 void enum_declaration() {
@@ -366,6 +362,12 @@ void enum_declaration() {
         }
     }
 }
+int index_of_bp; // index of bp pointer on stack
+
+
+extern void functionParameter();
+
+
 int basetype;    
 int expr_type;   
 void global_declaration() {
