@@ -305,6 +305,7 @@ else if (token >= '0' && token <= '9') {
     }
 }
 
+
 void match(int tk) {
     if (token != tk) {
         printf("expected token: %d(%c), got: %d(%c)\n", tk, tk, token, token);
@@ -313,10 +314,30 @@ void match(int tk) {
 
     next();
 }
+
+void function_declaration() {
+    
+
+    match('(');
+    function_parameter();
+    match(')');
+    match('{');
+    function_body();
+
+    current_id = symbols;
+    while (current_id[Token]) {
+        if (current_id[Class] == Loc) {
+            current_id[Class] = current_id[BClass];
+            current_id[Type]  = current_id[BType];
+            current_id[Value] = current_id[BValue];
+        }
+        current_id = current_id + IdSize;
+    }
+}
 enum { CHAR,  PTR };
 
 void enum_declaration() {
-    // parse enum [id] { a = 1, b = 3, ...}
+   
     int i;
     i = 0;
     while (token != '}') {
@@ -423,9 +444,10 @@ void global_declaration() {
 }
 
 
-
-
-
+int demo(int param_a, int *param_b) {
+    int local_1;
+    char local_2;
+}
 
 int expr();
 
@@ -441,6 +463,8 @@ int factor() {
     }
     return value;
 }
+
+
 
 int term_tail(int lvalue) {
     if (token == '*') {
@@ -479,6 +503,7 @@ int expr() {
     int lvalue = term();
     return expr_tail(lvalue);
 }
+
 
 
 
