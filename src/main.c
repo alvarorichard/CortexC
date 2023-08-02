@@ -14,6 +14,8 @@
 
 
 
+
+
 int *pc, *bp, *sp, ax, cycle;
 
 
@@ -64,18 +66,6 @@ int *current_id,
 
 enum {Token, Hash, Name, Type, Class, Value, BType, BClass, BValue, IdSize};
 
-
-int basetype;
-int expr_type;
-
-void global_declaration(){
-    int type;
-    int i;
-
-   
-
-
-}
 
 
 
@@ -323,6 +313,85 @@ void match(int tk) {
     next();
 }
 
+int basetype;    
+int expr_type;   
+enum { CHAR, INT, PTR };
+void global_declaration() {
+    
+
+
+    int type; 
+    int i; 
+
+    basetype = INT;
+
+   
+    if (token == Enum) {
+       
+        match(Enum);
+        if (token != '{') {
+            match(Id); 
+        }
+        if (token == '{') {
+            
+            match('{');
+            enum_declaration();
+            match('}');
+        }
+
+        match(';');
+        return;
+    }
+
+   
+    if (token == Int) {
+        match(Int);
+    }
+    else if (token == Char) {
+        match(Char);
+        basetype = CHAR;
+    }
+
+   
+    while (token != ';' && token != '}') {
+        type = basetype;
+      
+        while (token == Mul) {
+            match(Mul);
+            type = type + PTR;
+        }
+
+        if (token != Id) {
+           
+            printf("%d: bad global declaration\n", line);
+            exit(-1);
+        }
+        if (current_id[Class]) {
+            // identifier exists
+            printf("%d: duplicate global declaration\n", line);
+            exit(-1);
+        }
+        match(Id);
+        current_id[Type] = type;
+
+        if (token == '(') {
+            current_id[Class] = Fun;
+            current_id[Value] = (int)(text + 1); 
+            function_declaration();
+        } else {
+            current_id[Class] = Glo; 
+            current_id[Value] = (int)data; 
+            data = data + sizeof(int);
+        }
+
+        if (token == ',') {
+            match(',');
+        }
+    }
+    next();
+}
+
+
 
 
 
@@ -477,7 +546,7 @@ int eval() {
 
 
 #undef int
-enum { CHAR, INT, PTR };
+
 int *idmain;
 
 int main(int argc, char *argv[])
@@ -564,4 +633,3 @@ size_t linecap = 0;
   program();
   return eval();
   }
-
