@@ -1,7 +1,6 @@
 const std = @import("std");
 
- extern fn next() callconv(.C) void;
-
+extern fn next() callconv(.C) void;
 
 const Token = enum {
     Int,
@@ -27,21 +26,31 @@ var line: i32 = undefined;
 var currentId: Identifier = undefined;
 var index_of_bp: i32 = undefined;
 
-export fn functionParameter() i32 {
+// empty functions
+export fn functionParameter() void {}
+export fn function_body() void {}
+
+export fn function_parameter() i32 {
     var params: i32 = 0;
     var type_: Token = .Int;
 
     while (token != .RParen) {
         type_ = .Int;
         if (token == .Int) {
-            if (match(.Int) != 0) { return -1; }
+            if (match(.Int) != 0) {
+                return -1;
+            }
         } else if (token == .Char) {
             type_ = .Char;
-            if (match(.Char) != 0) { return -1; }
+            if (match(.Char) != 0) {
+                return -1;
+            }
         }
 
         while (token == .Mul) {
-            if (match(.Mul) != 0) { return -1; }
+            if (match(.Mul) != 0) {
+                return -1;
+            }
             type_ = .Mul;
         }
 
@@ -54,7 +63,9 @@ export fn functionParameter() i32 {
             return -1;
         }
 
-        if (match(.Id) != 0) { return -1; }
+        if (match(.Id) != 0) {
+            return -1;
+        }
 
         currentId.bclass = currentId.class;
         currentId.class = .Loc;
@@ -65,7 +76,9 @@ export fn functionParameter() i32 {
         params += 1;
 
         if (token == .Comma) {
-            if (match(.Comma) != 0) { return -1; }
+            if (match(.Comma) != 0) {
+                return -1;
+            }
         }
     }
 
@@ -75,7 +88,7 @@ export fn functionParameter() i32 {
 
 fn match(expectedToken: Token) i32 {
     if (token != expectedToken) {
-        std.debug.print("expected token: {}, got: {}\n", .{expectedToken, token});
+        std.debug.print("expected token: {}, got: {}\n", .{ expectedToken, token });
         return -1;
     }
     next();
