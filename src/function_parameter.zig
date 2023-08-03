@@ -24,34 +24,34 @@ var line: i32 = undefined;
 var currentId: Identifier = undefined;
 var index_of_bp: i32 = undefined;
 
-fn functionParameter() !void {
+export fn functionParameter() i32 {
     var params: i32 = 0;
     var type_: Token = .Int;
 
     while (token != .RParen) {
         type_ = .Int;
         if (token == .Int) {
-            try match(.Int);
+            if (match(.Int) != 0) { return -1; }
         } else if (token == .Char) {
             type_ = .Char;
-            try match(.Char);
+            if (match(.Char) != 0) { return -1; }
         }
 
         while (token == .Mul) {
-            try match(.Mul);
+            if (match(.Mul) != 0) { return -1; }
             type_ = .Mul;
         }
 
         if (token != .Id) {
             std.debug.print("{}: bad parameter declaration\n", .{line});
-            return error.BadParameterDeclaration;
+            return -1;
         }
         if (currentId.class == .Loc) {
             std.debug.print("{}: duplicate parameter declaration\n", .{line});
-            return error.DuplicateParameterDeclaration;
+            return -1;
         }
 
-        try match(.Id);
+        if (match(.Id) != 0) { return -1; }
 
         currentId.bclass = currentId.class;
         currentId.class = .Loc;
@@ -62,21 +62,19 @@ fn functionParameter() !void {
         params += 1;
 
         if (token == .Comma) {
-            try match(.Comma);
+            if (match(.Comma) != 0) { return -1; }
         }
     }
 
     index_of_bp = params + 1;
+    return 0;
 }
 
-fn match(expectedToken: Token) !void {
+fn match(expectedToken: Token) i32 {
     if (token != expectedToken) {
         std.debug.print("expected token: {}, got: {}\n", .{expectedToken, token});
-        return error.TokenMismatch;
+        return -1;
     }
-    next();
-}
-
-fn next() void {
-    // Implementação da função next
+    //next();
+    return 0;
 }
