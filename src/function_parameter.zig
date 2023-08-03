@@ -1,4 +1,7 @@
 const std = @import("std");
+extern "C" fn next() void;
+
+
 
 const Token = enum {
     Int,
@@ -75,6 +78,6 @@ fn match(expectedToken: Token) i32 {
         std.debug.print("expected token: {}, got: {}\n", .{expectedToken, token});
         return -1;
     }
-    //next();
+    next();
     return 0;
 }
