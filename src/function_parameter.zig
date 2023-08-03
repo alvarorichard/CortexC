@@ -1,6 +1,6 @@
 const std = @import("std");
-extern "C" fn next() void;
 
+ extern fn next() callconv(.C) void;
 
 
 const Token = enum {
