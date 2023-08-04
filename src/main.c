@@ -612,7 +612,11 @@ int main(int argc, char *argv[])
 {
    
 
-
+#ifdef _DEBUG
+#if defined(__linux__) || defined(__APPLE__)
+  setup_debug_handlers();
+#endif
+#endif
 
 int i, fd;
 
