@@ -1,29 +1,41 @@
-const Builder = @import("std").build.Builder;
+const Builder = @import("std").Build;
 
 pub fn build(b: *Builder) void {
     const target = b.standardTargetOptions(.{});
-    const mode = b.standardReleaseOptions(); //-Drelease-safe|release-fast|release-small
+    const optimize = b.standardOptimizeOption(.{});
 
-    const lib = b.addSharedLibrary("function_parameter", "src/function_parameter.zig", .unversioned);
-    lib.setBuildMode(mode);
-    lib.setTarget(target);
-    lib.linkLibC(); // next function need libc
-    lib.install();
-
-    const exe = b.addExecutable("CortexC", null);
-    exe.addCSourceFile("src/main.c", &.{
-        "-Wall",
-        "-Wextra",
-        // "-Werror",
+    const lib = b.addSharedLibrary(.{
+        .name = "function_parameter",
+        .target = target,
+        .optimize = optimize,
+        .root_source_file = .{ .path = "src/function_parameter.zig" },
     });
-    exe.setBuildMode(mode);
-    exe.setTarget(target);
-    exe.addIncludePath("src");
+    lib.linkLibC(); // next function need libc
+
+    b.installArtifact(lib);
+
+    const exe = b.addExecutable(.{
+        .name = "CortexC",
+        .target = target,
+        .optimize = optimize,
+    });
+    exe.addCSourceFile(.{
+        .file = .{ .path = "src/main.c" },
+        .flags = &.{
+            "-Wall",
+            "-Wextra",
+            "-Wpedantic",
+            "-Wshadow",
+        },
+    });
+    exe.omit_frame_pointer = false;
+    exe.addIncludePath(.{ .path = "src" });
     exe.linkLibrary(lib);
     exe.linkLibC();
-    exe.install();
 
-    const run_cmd = exe.run();
+    b.installArtifact(exe);
+
+    const run_cmd = b.addRunArtifact(exe);
     run_cmd.step.dependOn(b.getInstallStep());
     if (b.args) |args| {
         run_cmd.addArgs(args);
