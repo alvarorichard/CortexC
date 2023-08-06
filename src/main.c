@@ -339,7 +339,7 @@ void enum_declaration() {
     i = 0;
     while (token != '}') {
         if (token != Id) {
-            printf("%d: bad enum identifier %d\n", line, token);
+            printf("%d: identificador de enumeração inválido %d\n", line, token);
             exit(-1);
         }
         next();
@@ -347,7 +347,7 @@ void enum_declaration() {
             // like {a=10}
             next();
             if (token != Num) {
-                printf("%d: bad enum initializer\n", line);
+                printf("%d: inicializador de enumeração ruim\n", line);
                 exit(-1);
             }
             i = token_val;
