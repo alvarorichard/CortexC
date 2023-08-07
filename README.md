@@ -28,7 +28,7 @@ gcc interpreter.c -o interpreter
 Then, you can use the compiled interpreter to interpret and run a C program as follows:
 
 ```bash
-./interpreter program.c
+zig build
 ```
 
 Please note that the interpreter is quite simple and may not support all features of the C language. Also, the code seems to be incomplete and may not work correctly as is. For example, the expr() and factor() functions are not fully implemented.
