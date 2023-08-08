@@ -1,11 +1,14 @@
 // this file is used for tutorial to build the compiler step by step
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
 #include <stdint.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "function_parameter.h"
 #define int intptr_t
 
@@ -59,7 +62,7 @@ void next() {
     char *last_pos;
     int hash;
 
-    while (token = *src) {
+    while (token == *src) {
         ++src;
 
         // parse token here
@@ -286,7 +289,7 @@ void match(int tk) {
     if (token == tk) {
         next();
     } else {
-        printf("%d: expected token: %d\n", line, tk);
+       printf("%d: expected token: %ld\n", line, (long) tk);
         exit(-1);
     }
 }
@@ -436,7 +439,7 @@ void expression(int level) {
                     *++text = id[Value];
                 }
                 else {
-                    printf("%d: undefined variable\n", line);
+                   printf("%d: undefined variable\n", line);
                     exit(-1);
                 }
 
@@ -476,7 +479,7 @@ void expression(int level) {
             if (expr_type >= PTR) {
                 expr_type = expr_type - PTR;
             } else {
-                printf("%d: bad dereference\n", line);
+               printf("%d: bad dereference\n", line);
                 exit(-1);
             }
 
