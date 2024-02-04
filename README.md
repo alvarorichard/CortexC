@@ -23,7 +23,7 @@ The interpreter is divided into several parts:
 To use the interpreter, you need to have a C compiler installed on your system. You can compile the interpreter itself using the following command:
 
 ```c
-clang interpreter.c -o interpreter
+clang main.c -lfunction_parameter -o main
 ```
 Then, you can use the compiled interpreter to interpret and run a C program as follows:
 
