@@ -1,1 +1,0 @@
-//gcc main.c -lfunction_parameter -o main

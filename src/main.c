@@ -1,4 +1,6 @@
 // this file is used for tutorial to build the compiler step by step
+//gcc main.c -lfunction_parameter -o main
+
 
 #include <stdio.h>
 #include <stdlib.h>
