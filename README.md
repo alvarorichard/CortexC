@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/alvarorichard/CortexC/assets/102667323/d1573ebf-6627-468f-b4c6-db3d7c8a62e7" alt="Imagem logo" />
+  <img src="https://github.com/alvarorichard/CortexC/assets/102667323/002eab8a-29ac-435f-a792-e58067ba79e0" alt="Imagem logo" />
 </p>
 
 ## Simple C Interpreter
